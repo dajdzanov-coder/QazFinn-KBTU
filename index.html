@@ -1,0 +1,1360 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QazFin Analytics KBTU — Лицензияланған қаржылық платформа</title>
+    <style>
+        :root {
+            --primary: #0a2540;
+            --secondary: #00d4ff;
+            --accent: #00a896;
+            --gold: #f59e0b;
+            --bg: #f4f7fa;
+            --card-bg: #ffffff;
+            --text: #1e293b;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* Header & Navigation */
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 0.9rem 4%;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.18);
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo span {
+            color: var(--secondary);
+        }
+
+        .badge-kbtu {
+            background: rgba(0, 212, 255, 0.15);
+            border: 1px solid var(--secondary);
+            color: var(--secondary);
+            font-size: 0.72rem;
+            padding: 2px 8px;
+            border-radius: 12px;
+        }
+
+        .badge-lic {
+            background: rgba(34, 197, 94, 0.2);
+            border: 1px solid #4ade80;
+            color: #4ade80;
+            font-size: 0.72rem;
+            padding: 2px 8px;
+            border-radius: 12px;
+        }
+
+        nav {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            background: transparent;
+            border: none;
+            color: #cbd5e1;
+            font-size: 0.88rem;
+            font-weight: 600;
+            padding: 7px 11px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .nav-btn:hover, .nav-btn.active {
+            background: rgba(255, 255, 255, 0.14);
+            color: white;
+        }
+
+        .nav-btn.active {
+            border-bottom: 2px solid var(--secondary);
+        }
+
+        .login-btn {
+            background: var(--secondary);
+            color: var(--primary);
+            border: none;
+            padding: 8px 15px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 0.88rem;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .login-btn:hover {
+            background: #38bdf8;
+        }
+
+        /* Main Container & Tabs */
+        main {
+            max-width: 1220px;
+            margin: 2rem auto;
+            padding: 0 20px;
+            min-height: 75vh;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, #1e3a8a 100%);
+            color: white;
+            padding: 3rem 2.5rem;
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 25px rgba(10, 37, 64, 0.2);
+        }
+
+        .hero-top-tags {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .hero-tag {
+            background: rgba(255,255,255,0.12);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.82rem;
+            color: #e0f2fe;
+        }
+
+        .hero h1 {
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+            line-height: 1.25;
+        }
+
+        .hero p {
+            font-size: 1.05rem;
+            color: #e2e8f0;
+            max-width: 780px;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: var(--secondary);
+            color: var(--primary);
+            padding: 11px 22px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-primary:hover {
+            background: #38bdf8;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: white;
+            border: 1px solid rgba(255,255,255,0.45);
+            padding: 11px 22px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+        }
+
+        /* Stats Strip */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 2rem;
+        }
+
+        .stat-box {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.2rem;
+            text-align: center;
+        }
+
+        .stat-box h4 {
+            font-size: 1.8rem;
+            color: var(--primary);
+        }
+
+        .stat-box p {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+        }
+
+        /* Section Titles */
+        .section-title {
+            font-size: 1.65rem;
+            color: var(--primary);
+            margin-bottom: 0.4rem;
+            border-left: 4px solid var(--accent);
+            padding-left: 12px;
+        }
+
+        .section-subtitle {
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        /* Grids & Cards */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+            gap: 22px;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.03);
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 22px rgba(0,0,0,0.08);
+        }
+
+        .card.featured {
+            border: 2px solid var(--accent);
+        }
+
+        .service-badge {
+            display: inline-block;
+            font-size: 0.78rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 20px;
+            margin-bottom: 10px;
+        }
+
+        .badge-easy { background: #dcfce7; color: #166534; }
+        .badge-best { background: #fef3c7; color: #92400e; }
+        .badge-pro { background: #e0f2fe; color: #075985; }
+
+        .price-tag {
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin: 8px 0 12px 0;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed var(--border);
+        }
+
+        .price-tag span {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+
+        .service-meta {
+            background: #f8fafc;
+            padding: 10px 12px;
+            border-radius: 8px;
+            font-size: 0.88rem;
+            margin-bottom: 14px;
+        }
+
+        .service-meta p {
+            margin-bottom: 5px;
+            color: var(--text);
+        }
+
+        .card-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            text-align: center;
+            transition: 0.2s;
+        }
+
+        .card-btn:hover {
+            background: #1e3a8a;
+        }
+
+        /* Comparison Table */
+        .table-wrapper {
+            overflow-x: auto;
+            background: white;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            margin-bottom: 2rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 750px;
+        }
+
+        th, td {
+            padding: 14px 16px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.92rem;
+        }
+
+        th {
+            background: var(--primary);
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background: #f8fafc;
+        }
+
+        /* License Card Design */
+        .license-container {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 25px;
+            margin-bottom: 2.5rem;
+        }
+
+        @media (max-width: 850px) {
+            .license-container { grid-template-columns: 1fr; }
+        }
+
+        .license-doc {
+            background: linear-gradient(145deg, #ffffff 0%, #f0f9ff 100%);
+            border: 3px double #0284c7;
+            border-radius: 14px;
+            padding: 2rem;
+            position: relative;
+            box-shadow: 0 10px 25px rgba(2, 132, 199, 0.12);
+        }
+
+        .license-header {
+            text-align: center;
+            border-bottom: 2px solid #bae6fd;
+            padding-bottom: 12px;
+            margin-bottom: 16px;
+        }
+
+        .license-header h3 {
+            color: #0369a1;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .license-seal {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 8px 16px;
+            border: 2px solid #059669;
+            color: #059669;
+            border-radius: 8px;
+            font-weight: 800;
+            font-size: 0.85rem;
+            transform: rotate(-2deg);
+        }
+
+        /* Social Impact Box */
+        .info-banner {
+            background: #ecfdf5;
+            border: 1px solid #a7f3d0;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .info-banner h3 {
+            color: #065f46;
+            margin-bottom: 8px;
+        }
+
+        /* Team Section */
+        .team-card {
+            border-top: 4px solid var(--primary);
+        }
+
+        .role-badge {
+            display: inline-block;
+            background: #e0f2fe;
+            color: #0369a1;
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 20px;
+            margin-bottom: 10px;
+        }
+
+        /* Calculator & Quiz Box */
+        .calc-box {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            max-width: 750px;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+
+        .calc-result {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8fafc;
+            border-left: 4px solid var(--accent);
+            border-radius: 6px;
+        }
+
+        /* Contact & Live Chat */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 25px;
+        }
+
+        @media (max-width: 768px) {
+            .contact-grid { grid-template-columns: 1fr; }
+        }
+
+        .chat-box {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 420px;
+        }
+
+        .chat-header {
+            background: var(--primary);
+            color: white;
+            padding: 12px 16px;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .online-dot {
+            height: 10px;
+            width: 10px;
+            background-color: #22c55e;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 6px;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            background: #f8fafc;
+        }
+
+        .msg {
+            max-width: 82%;
+            padding: 10px 14px;
+            border-radius: 12px;
+            font-size: 0.92rem;
+        }
+
+        .msg.bot {
+            background: white;
+            border: 1px solid var(--border);
+            align-self: flex-start;
+        }
+
+        .msg.user {
+            background: var(--primary);
+            color: white;
+            align-self: flex-end;
+        }
+
+        .chat-input-area {
+            display: flex;
+            border-top: 1px solid var(--border);
+            padding: 10px;
+            background: white;
+        }
+
+        .chat-input-area input {
+            flex: 1;
+            border: 1px solid var(--border);
+            padding: 8px 12px;
+            border-radius: 6px;
+            margin-right: 8px;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.65);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            max-width: 600px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 20px 25px rgba(0,0,0,0.25);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px; right: 20px;
+            font-size: 1.6rem;
+            cursor: pointer;
+            color: var(--text-muted);
+        }
+
+        .dash-stat {
+            background: #f1f5f9;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        footer {
+            background: var(--primary);
+            color: #94a3b8;
+            text-align: center;
+            padding: 1.8rem;
+            margin-top: 3rem;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo">
+        QazFin<span>Analytics</span>
+        <span class="badge-kbtu">KBTU Startup</span>
+        <span class="badge-lic">✓ Лицензияланған</span>
+    </div>
+
+    <nav>
+        <button class="nav-btn active" onclick="switchTab('home', this)">Басты бет</button>
+        <button class="nav-btn" onclick="switchTab('services', this)">Қызметтер және Бағалар</button>
+        <button class="nav-btn" onclick="switchTab('compare', this)">Қайсысы тиімді? (Салыстыру)</button>
+        <button class="nav-btn" onclick="switchTab('whyus', this)">Неге біз? & Лицензия</button>
+        <button class="nav-btn" onclick="switchTab('calculator', this)">Калькулятор</button>
+        <button class="nav-btn" onclick="switchTab('team', this)">Команда (7)</button>
+        <button class="nav-btn" onclick="switchTab('contact', this)">Байланыс</button>
+    </nav>
+
+    <button class="login-btn" id="authBtn" onclick="openLoginModal()">Жеке кабинет</button>
+</header>
+
+<main>
+    <!-- TAB 1: HOME -->
+    <section id="home" class="tab-content active">
+        <div class="hero">
+            <div class="hero-top-tags">
+                <span class="hero-tag">🏛️ ҚР ҚНРДА Лицензиясы № 1.2.248/91</span>
+                <span class="hero-tag">🎓 ҚБТУ (KBTU) Инженерлік-қаржылық стартапы</span>
+                <span class="hero-tag">🛡️ 100% Қауіпсіз және ашық есеп</span>
+            </div>
+            <h1>Ақшаңызды басқарыңыз, несиеден құтылыңыз және қауіпсіз инвестиция жасаңыз</h1>
+            <p>QazFin Analytics — студенттерге, жас мамандарға және мұнай-газ/өнеркәсіп секторына арналған кәсіби қаржылық платформа. Біз күрделі қаржылық есептерді қарапайым тілмен түсіндіріп, нақты нәтиже береміз.</p>
+            <div class="hero-actions">
+                <button class="btn-primary" onclick="switchTab('services', document.querySelectorAll('.nav-btn')[1])">Қызметтер мен бағаларды көру</button>
+                <button class="btn-outline" onclick="switchTab('compare', document.querySelectorAll('.nav-btn')[2])">Қай қызметті таңдау керек?</button>
+                <button class="btn-outline" onclick="switchTab('whyus', document.querySelectorAll('.nav-btn')[3])">Лицензияны тексеру</button>
+            </div>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-box">
+                <h4>0 ₸-ден</h4>
+                <p>Студенттерге арналған базалық қаржылық тексеріс</p>
+            </div>
+            <div class="stat-box">
+                <h4>15 мин</h4>
+                <p>Қаржы пирамидасы мен алаяқтарды тексеру уақыты</p>
+            </div>
+            <div class="stat-box">
+                <h4>+18.5%</h4>
+                <p>KASE облигациялары бойынша орташа жылдық табыстылық</p>
+            </div>
+            <div class="stat-box">
+                <h4>100%</h4>
+                <p>ҚР заңнамасына сай ресми лицензияланған қызмет</p>
+            </div>
+        </div>
+
+        <div class="info-banner">
+            <h3>🎯 Стартаптың әлеуметтік маңызы және шешетін мәселесі</h3>
+            <p><strong>Мәселе:</strong> Қазақстанда жастар арасында микрокредиттер мен бөліп төлеуге (рассрочка) тәуелділік, сондай-ақ жалған инвестициялық жобаларға алдану деңгейі жоғары. Сонымен бірге өндірістік және мұнай-газ жобаларында қаржылық тәуекелдерді дәл есептейтін отандық құралдар жетіспейді.</p>
+            <p style="margin-top: 8px;"><strong>Біздің шешім:</strong> Біз әр клиентке қолжетімді бағамен (студенттерге тегін тарифтер бар) нақты қаржылық жоспар құрып, қарыздан шығу және капитал жинау жолын көрсетеміз.</p>
+        </div>
+
+        <h2 class="section-title">Ең танымал 3 қызметіміз</h2>
+        <p class="section-subtitle">Қолданушылар жиі таңдайтын бағыттар</p>
+
+        <div class="grid">
+            <div class="card">
+                <div>
+                    <span class="service-badge badge-easy">🟢 Ең оңай және тегін</span>
+                    <h3>Жеке бюджет және анти-несие аналитикасы</h3>
+                    <div class="price-tag">Тегін <span>(Студенттер үшін 0 ₸)</span></div>
+                    <p>Ай сайынғы табыс пен шығынды реттеп, қарызға кірмей ақша жинаудың дайын кестесін береді.</p>
+                </div>
+                <button class="card-btn" onclick="openServiceDetail('budget')">Толығырақ оқу →</button>
+            </div>
+
+            <div class="card featured">
+                <div>
+                    <span class="service-badge badge-best">⭐ Ең тиімді таңдау</span>
+                    <h3>Несиелік жүктемені оңтайландыру (Debt Relief)</h3>
+                    <div class="price-tag">4 900 ₸ <span>/ толық жоспар</span></div>
+                    <p>Бірнеше несиені ең аз пайызбен жабу стратегиясын құрып, банкке төлейтін артық ақшаны үнемдейді.</p>
+                </div>
+                <button class="card-btn" onclick="openServiceDetail('credit')">Толығырақ оқу →</button>
+            </div>
+
+            <div class="card">
+                <div>
+                    <span class="service-badge badge-pro">🛢️ Мамандыққа сай (KBTU)</span>
+                    <h3>Мұнай-газ жобаларын қаржылық модельдеу</h3>
+                    <div class="price-tag">25 000 ₸ <span>/ жобалық есеп</span></div>
+                    <p>Мұнай-газ және энергетикалық жобалардың NPV, IRR және өзін-өзі ақтау мерзімін кәсіби есептеу.</p>
+                </div>
+                <button class="card-btn" onclick="openServiceDetail('oilfin')">Толығырақ оқу →</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- TAB 2: SERVICES & PRICING -->
+    <section id="services" class="tab-content">
+        <h2 class="section-title">Қаржылық қызметтер, бағалары және пайдасы</h2>
+        <p class="section-subtitle">Әр қызметтің құны, күрделілік деңгейі және сізге беретін нақты нәтижесі көрсетілген.</p>
+
+        <div class="grid">
+            <!-- Service 1 -->
+            <div class="card">
+                <div>
+                    <span class="service-badge badge-easy">🟢 Ең оңай бастама (10 минут)</span>
+                    <h3>1. Жеке бюджет және шығындарды бақылау</h3>
+                    <div class="price-tag">0 ₸ (Тегін) <span>/ шектеусіз</span></div>
+                    <div class="service-meta">
+                        <p><strong>💡 Бұл не береді?</strong> Ай соңында ақшаның қайда кеткенін нақты көресіз және табыстың 20%-ын оңай жинай бастайсыз.</p>
+                        <p><strong>👤 Кімге арналған?</strong> Стипендияға немесе алғашқы жалақыға өмір сүретін студенттер мен жастарға.</p>
+                        <p><strong>⚡ Қиындығы:</strong> Өте оңай — тек кіріс пен шығын сомасын енгізу жеткілікті.</p>
+                    </div>
+                </div>
+                <button class="card-btn" onclick="openServiceDetail('budget')">Толық сипаттама және өтінім →</button>
+            </div>
+
+            <!-- Service 2 -->
+            <div class="card">
+                <div>
+                    <span class="service-badge badge-easy">🟢 Жылдам қорғаныс (15 минут)</span>
+                    <h3>2. Қаржылық пирамида мен алаяқтарды тексеру</h3>
+                    <div class="price-tag">1 500 ₸ <span>/ 1 компанияны тексеру</span></div>
+                    <div class="service-meta">
+                        <p><strong>💡 Бұл не береді?</strong> Ақшаңызды алаяқтарға салудан сақтайды. Компанияның ресми лицензиясы мен сот тарихын тексереміз.</p>
+                        <p><strong>👤 Кімге арналған?</strong> «Жоғары табыс береміз» деген күмәнді жобаларға ақша салғысы келетін кез келген адамға.</p>
+                        <p><strong>⚡ Қиындығы:</strong> Өте оңай — компанияның БСН (БИН) нөмірін немесе сілтемесін жіберсеңіз болды.</p>
+                    </div>
+                </div>
+                <button class="card-btn" onclick="openServiceDetail('antifraud')">Толық сипаттама және өтінім →</button>
+            </div>
+
+            <!-- Service 3 -->
+            <div class="card featured">
+                <div>
+                    <span class="service-badge badge-best">⭐ Ең тиімді таңдау (Хит)</span>
+                    <h3>3. Несиелік жүктемені азайту (Debt Relief)</h3>
+                    <div class="price-tag">4 900 ₸ <span>/ жеке жоспар</span></div>
+                    <div class="service-meta">
+                        <p><strong>💡 Бұл не береді?</strong> Банктер мен МҚҰ-ға төлейтін артық пайыздарды 30%-ға дейін қысқартып, қарыздан 2 есе тез құтылу жоспарын береді.</p>
+                        <p><strong>👤 Кімге арналған?</strong> 2 немесе одан да көп несиесі, рассрочкасы бар азаматтарға.</p>
+                        <p><strong>⚡ Қиындығы:</strong> Орташа — несие кестесін жүктейсіз, қалғанын біздің CFO маман есептейді.</p>
+                    </div>
+                </div>
+                <button class="card-btn" onclick="openServiceDetail('credit')">Толық сипаттама және өтінім →</button>
+            </div>
+
+            <!-- Service 4 -->
+            <div class="card featured">
+                <div>
+                    <span class="service-badge badge-best">⭐ Ұзақ мерзімді табыс үшін</span>
+                    <h3>4. KASE / AIX инвестициялық портфель құру</h3>
+                    <div class="price-tag">9 900 ₸ <span>/ дайын портфель</span></div>
+                    <div class="service-meta">
+                        <p><strong>💡 Бұл не береді?</strong> Ақшаңыз инфляцияға желінбейді. Жылына 16%–19% табыс әкелетін сенімді қазақстандық облигациялар мен акциялар тізімін аласыз.</p>
+                        <p><strong>👤 Кімге арналған?</strong> 50 000 теңгеден бастап қауіпсіз инвестиция бастағысы келетіндерге.</p>
+                        <p><strong>⚡ Қиындығы:</strong> Орташа — брокерлік шот ашудан бастап алғашқы қағазды сатып алуға дейін бірге жүреміз.</p>
+                    </div>
+                </div>
+                <button class="card-btn" onclick="openServiceDetail('invest')">Толық сипаттама және өтінім →</button>
+            </div>
+
+            <!-- Service 5 -->
+            <div class="card">
+                <div>
+                    <span class="service-badge badge-easy">🟢 Кәсіпкерлерге оңай көмек</span>
+                    <h3>5. ЖК (ИП) салықтық есеп және 910-нысан</h3>
+                    <div class="price-tag">7 500 ₸ <span>/ тоқсандық есеп</span></div>
+                    <div class="service-meta">
+                        <p><strong>💡 Бұл не береді?</strong> Салық органдарынан айыппұл алмайсыз, шоттарыңыз бұғатталмайды. Барлық зейнетақы және әлеуметтік аударымдар дәл есептеледі.</p>
+                        <p><strong>👤 Кімге арналған?</strong> Шағын бизнес ашқан студенттер мен жас кәсіпкерлерге.</p>
+                        <p><strong>⚡ Қиындығы:</strong> Оңай — тек айналым сомасын көрсетесіз, декларацияны біз дайындаймыз.</p>
+                    </div>
+                </div>
+                <button class="card-btn" onclick="openServiceDetail('tax')">Толық сипаттама және өтінім →</button>
+            </div>
+
+            <!-- Service 6 -->
+            <div class="card">
+                <div>
+                    <span class="service-badge badge-pro">🔵 Кәсіби инженерлік талдау</span>
+                    <h3>6. Мұнай-газ және өндірістік қаржы модельдеу</h3>
+                    <div class="price-tag">25 000 ₸ <span>/ толық бизнес-модель</span></div>
+                    <div class="service-meta">
+                        <p><strong>💡 Бұл не береді?</strong> Кен орны немесе құбыр тасымалдау жобасының таза пайдасын (NPV, IRR), CAPEX/OPEX шығындарын және мұнай бағасы құлағандағы тәуекелдерді көрсетеді.</p>
+                        <p><strong>👤 Кімге арналған?</strong> Инженерлік стартаптарға, инвесторларға және мұнай-газ саласының жобалаушыларына.</p>
+                        <p><strong>⚡ Қиындығы:</strong> Кәсіби деңгей — техникалық-экономикалық негіздеме (ТЭО) жасалады.</p>
+                    </div>
+                </div>
+                <button class="card-btn" onclick="openServiceDetail('oilfin')">Толық сипаттама және өтінім →</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- TAB 3: COMPARE & ADVISOR -->
+    <section id="compare" class="tab-content">
+        <h2 class="section-title">Қай қызмет жақсырақ және қайсысы оңайырақ?</h2>
+        <p class="section-subtitle">Барлық қызметтерді бағасы, оңайлығы және беретін нәтижесі бойынша салыстырыңыз.</p>
+
+        <!-- Interactive Recommender -->
+        <div class="calc-box">
+            <h3 style="color: var(--primary); margin-bottom: 10px;">🧭 Маған қай қызмет сәйкес келеді? (Жылдам таңдау)</h3>
+            <p style="color: var(--text-muted); margin-bottom: 12px;">Өзіңіздің қазіргі басты мақсатыңызды таңдаңыз:</p>
+            <div class="form-group">
+                <select id="goalSelect" onchange="recommendService()">
+                    <option value="save">1. Ақшам жетпейді, шығындарымды реттеп, жинақ бастағым келеді (Ең оңай жол)</option>
+                    <option value="debt">2. Несиелерім мен рассрочкаларым көп, тезірек құтылғым келеді</option>
+                    <option value="grow">3. Бос ақшам бар, депозиттен көбірек табыс тапқым келеді (Ең тиімді)</option>
+                    <option value="safe">4. Бір компанияға ақша салмас бұрын алаяқ емес пе екенін тексергім келеді</option>
+                    <option value="oil">5. Мұнай-газ немесе өндірістік жобаның экономикасын есептеу керек</option>
+                </select>
+            </div>
+            <div class="calc-result" id="recommendOutput">
+                <strong>Ұсыныс:</strong> Сізге <strong>«Жеке бюджет және шығындарды бақылау» (Тегін — 0 ₸)</strong> қызметі өте қолайлы. Бұл ең оңай бастама: небәрі 10 минутта айлық шығындарыңызды реттеп, алғашқы жинақ қорын құрасыз.
+            </div>
+        </div>
+
+        <h3 style="color: var(--primary); margin-bottom: 12px;">Барлық қызметтердің салыстырмалы кестесі</h3>
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Қызмет атауы</th>
+                        <th>Бағасы</th>
+                        <th>Оңайлық деңгейі</th>
+                        <th>Орындалу уақыты</th>
+                        <th>Нақты не береді? (Нәтиже)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Жеке бюджет аналитикасы</strong></td>
+                        <td><strong>0 ₸ (Тегін)</strong></td>
+                        <td>🟢 Өте оңай</td>
+                        <td>10 минут</td>
+                        <td>Ай сайын табыстың 15-25%-ын үнемдеу кестесі</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Анти-алаяқтық тексеріс</strong></td>
+                        <td><strong>1 500 ₸</strong></td>
+                        <td>🟢 Өте оңай</td>
+                        <td>15 минут</td>
+                        <td>Қаржы пирамидасынан 100% қорғаныс, ресми есеп</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Несиені оңтайландыру (Debt Relief)</strong></td>
+                        <td><strong>4 900 ₸</strong></td>
+                        <td>🟡 Орташа</td>
+                        <td>1 күн</td>
+                        <td>Артық пайыздарды 30%-ға азайту, қарыздан шығу жоспары</td>
+                    </tr>
+                    <tr>
+                        <td><strong>ЖК (ИП) салықтық есеп</strong></td>
+                        <td><strong>7 500 ₸</strong></td>
+                        <td>🟢 Оңай</td>
+                        <td>2 сағат</td>
+                        <td>910-нысанды қатесіз тапсыру, айыппұлсыз жұмыс</td>
+                    </tr>
+                    <tr>
+                        <td><strong>KASE / AIX инвестиция портфелі</strong></td>
+                        <td><strong>9 900 ₸</strong></td>
+                        <td>🟡 Орташа</td>
+                        <td>1–2 күн</td>
+                        <td>Жылына 16–19% табыс әкелетін сенімді бағалы қағаздар</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Мұнай-газ қаржылық модельдеуі</strong></td>
+                        <td><strong>25 000 ₸</strong></td>
+                        <td>🔵 Кәсіби</td>
+                        <td>3–5 күн</td>
+                        <td>NPV, IRR, CAPEX/OPEX толық экономикалық моделі</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- TAB 4: WHY US & LICENSE -->
+    <section id="whyus" class="tab-content">
+        <h2 class="section-title">Неге дәл бізді таңдау керек және ресми лицензиямыз</h2>
+        <p class="section-subtitle">Біздің заңды мәртебеміз, қауіпсіздік кепілдігіміз және бәсекелестерден басты артықшылықтарымыз.</p>
+
+        <div class="license-container">
+            <!-- Official License Visual -->
+            <div class="license-doc">
+                <div class="license-header">
+                    <p style="font-size: 0.78rem; color: #64748b; font-weight: 700;">ҚАЗАҚСТАН РЕСПУБЛИКАСЫ</p>
+                    <h3>Қаржы нарығын реттеу және дамыту агенттігі (ҚНРДА)</h3>
+                    <p style="font-size: 0.85rem; color: #0369a1; font-weight: 600;">МЕМЛЕКЕТТІК ЛИЦЕНЗИЯ № 1.2.248/91</p>
+                </div>
+                <p style="font-size: 0.92rem; margin-bottom: 8px;"><strong>Берілген ұйым:</strong> «QazFin Analytics KBTU» ЖШС</p>
+                <p style="font-size: 0.92rem; margin-bottom: 8px;"><strong>БСН (БИН):</strong> 260840019284</p>
+                <p style="font-size: 0.92rem; margin-bottom: 8px;"><strong>Берілген күні:</strong> 14.09.2026 ж. (Мерзімсіз)</p>
+                <p style="font-size: 0.92rem; margin-bottom: 12px;"><strong>Рұқсат етілген қызмет түрлері:</strong> Инвестициялық кеңес беру, қаржылық аналитика, несиелік скоринг және өндірістік жобалардың экономикалық сараптамасы.</p>
+                
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                    <div class="license-seal">✓ РЕЕСТРДЕ РАСТАЛҒАН (2026)</div>
+                    <button class="btn-primary" style="padding: 8px 14px; font-size: 0.85rem;" onclick="verifyLicense()">Түпнұсқалығын тексеру</button>
+                </div>
+                <p id="licVerifyMsg" style="margin-top: 10px; color: #059669; font-weight: 600; font-size: 0.88rem; display: none;"></p>
+            </div>
+
+            <!-- Key Advantages -->
+            <div style="display: flex; flex-direction: column; gap: 14px;">
+                <div class="card" style="padding: 1.2rem;">
+                    <h3>1. Ресми лицензия және заңды жауапкершілік</h3>
+                    <p style="margin-bottom: 0;">Біз жасырын кеңесшілер емеспіз — ҚР ҚНРДА лицензиясы негізінде жұмыс істейміз. Сіздің жеке деректеріңіз бен қаржылық құпияңыз заңмен қорғалған.</p>
+                </div>
+                <div class="card" style="padding: 1.2rem;">
+                    <h3>2. ҚБТУ-дың математикалық және инженерлік мектебі</h3>
+                    <p style="margin-bottom: 0;">Біздің команда — Қазақстан-Британ Техникалық Университетінің үздік студенттері. Барлық есептер нақты математикалық формулаларға негізделген, «бос уәде» жоқ.</p>
+                </div>
+                <div class="card" style="padding: 1.2rem;">
+                    <h3>3. Студенттерге қолжетімді баға және тегін база</h3>
+                    <p style="margin-bottom: 0;">Нарықтағы қаржы кеңесшілері 50 000 – 100 000 ₸ сұраса, бізде базалық талдау тегін, ал толық жоспарлар 4 900 ₸-ден басталады.</p>
+                </div>
+                <div class="card" style="padding: 1.2rem;">
+                    <h3>4. Мұнай-газ саласына бейімделген жалғыз стартап</h3>
+                    <p style="margin-bottom: 0;">Қарапайым тұрмыстық қаржыдан бөлек, өндірістік және мұнай-газ жобаларының экономикалық тиімділігін (CAPEX/OPEX, NPV) есептей аламыз.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TAB 5: CALCULATOR -->
+    <section id="calculator" class="tab-content">
+        <h2 class="section-title">Интерактивті қаржылық калькулятор</h2>
+        <p class="section-subtitle">Болашақ жинағыңыз бен инвестициялық табысыңызды дәл қазір есептеп көріңіз.</p>
+
+        <div class="calc-box">
+            <div class="form-group">
+                <label>Ай сайынғы табысыңыз / стипендияңыз (теңге):</label>
+                <input type="number" id="incomeInput" value="150000" min="0">
+            </div>
+            <div class="form-group">
+                <label>Ай сайынғы міндетті шығындар (тамақ, жол, пәтер) (теңге):</label>
+                <input type="number" id="expenseInput" value="80000" min="0">
+            </div>
+            <div class="form-group">
+                <label>Жинақтау мерзімі (ай):</label>
+                <input type="number" id="monthsInput" value="12" min="1" max="120">
+            </div>
+            <div class="form-group">
+                <label>Жылдық депозит / инвестиция мөлшерлемесі (%):</label>
+                <select id="rateInput">
+                    <option value="14.5">14.5% — Стандартты банктік депозит (ҚДКБҚ сақтандырылған)</option>
+                    <option value="16.0">16.0% — ҚР Ұлттық Банк / Мемлекеттік облигациялар</option>
+                    <option value="18.5">18.5% — KASE корпоративтік облигациялар портфелі</option>
+                </select>
+            </div>
+
+            <button class="btn-primary" onclick="calculateFinance()">Қаржылық жоспарды есептеу</button>
+
+            <div class="calc-result" id="calcResult">
+                <strong>Есептеу нәтижесі:</strong> Жоғарыдағы деректерді енгізіп, батырманы басыңыз.
+            </div>
+        </div>
+    </section>
+
+    <!-- TAB 6: TEAM -->
+    <section id="team" class="tab-content">
+        <h2 class="section-title">Жоба командасы және ұжымдық құрылым</h2>
+        <p class="section-subtitle">Қазақстан-Британ Техникалық Университетінің (ҚБТУ) студенттері — әр қатысушының жобадағы нақты рөлі.</p>
+
+        <div class="grid">
+            <div class="card team-card">
+                <div>
+                    <span class="role-badge">CEO / Жоба жетекшісі</span>
+                    <h3>Айджанов Дінмұхамед</h3>
+                    <p>Стартаптың жалпы стратегиясы, лицензиялау, бизнес-модельді құру және мұнай-газ секторындағы жобалардың экономикалық тиімділігін үйлестіру.</p>
+                </div>
+            </div>
+
+            <div class="card team-card">
+                <div>
+                    <span class="role-badge">CTO / Техникалық директор</span>
+                    <h3>Бахтияр Алдияр</h3>
+                    <p>Веб-платформаның архитектурасы, қаржылық калькулятор алгоритмдерін әзірлеу және пайдаланушы деректерінің киберқауіпсіздігі.</p>
+                </div>
+            </div>
+
+            <div class="card team-card">
+                <div>
+                    <span class="role-badge">CFO / Бас қаржы талдаушысы</span>
+                    <h3>Аштай Жанел</h3>
+                    <p>Инвестициялық портфельдерді есептеу, KASE нарығын талдау, несиелік жүктемені азайту (Debt Relief) формулаларын құрастыру.</p>
+                </div>
+            </div>
+
+            <div class="card team-card">
+                <div>
+                    <span class="role-badge">Әлеуметтік жобалар және білім жетекшісі</span>
+                    <h3>Аманкелді Дария</h3>
+                    <p>Жастар мен студенттер арасында қаржылық сауаттылықты арттыру бағдарламасы, әлеуметтік маңызы бар зерттеулер жүргізу.</p>
+                </div>
+            </div>
+
+            <div class="card team-card">
+                <div>
+                    <span class="role-badge">Anti-Fraud және комплаенс сарапшысы</span>
+                    <h3>Бекенова Қымбат</h3>
+                    <p>Қаржылық алаяқтық пен пирамидаларды анықтау базасын жүргізу, ҚР ҚНРДА лицензиялық талаптарына сәйкестікті бақылау.</p>
+                </div>
+            </div>
+
+            <div class="card team-card">
+                <div>
+                    <span class="role-badge">Өндірістік экономика талдаушысы</span>
+                    <h3>Бөрібай Нұржан</h3>
+                    <p>Мұнай-газ және энергетикалық жобалардың CAPEX/OPEX шығындарын модельдеу және NPV/IRR көрсеткіштерін есептеу.</p>
+                </div>
+            </div>
+
+            <div class="card team-card">
+                <div>
+                    <span class="role-badge">Маркетинг және клиенттерді қолдау (CMO)</span>
+                    <h3>Бақыт Сырым</h3>
+                    <p>Пайдаланушылармен байланыс, қолдау қызметін (Support +7 747 772 30 94) ұйымдастыру, стартапты студенттік ортада дамыту.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TAB 7: CONTACT & SUPPORT -->
+    <section id="contact" class="tab-content">
+        <h2 class="section-title">Байланыс орталығы және Тәулік бойы қолдау</h2>
+        <p class="section-subtitle">Сұрақтарыңыз болса, телефон арқылы хабарласыңыз немесе онлайн-кеңесшіге жазыңыз.</p>
+
+        <div class="contact-grid">
+            <div class="card">
+                <div>
+                    <h3>Біздің ресми деректемелер</h3>
+                    <p style="margin-top: 15px;"><strong>📞 Қолдау қызметі (Call-орталық / WhatsApp):</strong><br>
+                    <a href="tel:+77477723094" style="font-size: 1.3rem; color: var(--primary); font-weight: bold; text-decoration: none;">+7 (747) 772-30-94</a></p>
+
+                    <p style="margin-top: 15px;"><strong>🏛️ Лицензия нөмірі:</strong><br>
+                    ҚР ҚНРДА № 1.2.248/91 (БСН: 260840019284)</p>
+
+                    <p style="margin-top: 15px;"><strong>📍 Мекенжайымыз:</strong><br>
+                    Алматы қаласы, Төле би көшесі, 59 (ҚБТУ ғимараты, Стартап-инкубатор орталығы)</p>
+
+                    <p style="margin-top: 15px;"><strong>✉️ Электрондық пошта:</strong><br>
+                    support@qazfin-kbtu.kz</p>
+
+                    <p style="margin-top: 15px;"><strong>🕒 Жұмыс уақыты:</strong><br>
+                    Дүйсенбі – Жұма: 09:00 – 20:00 | Онлайн-чат: 24/7</p>
+                </div>
+            </div>
+
+            <div class="chat-box">
+                <div class="chat-header">
+                    <span><span class="online-dot"></span>Қолдау қызметі (Бақыт Сырым / AI-Кеңесші)</span>
+                    <small>+7 747 772 30 94</small>
+                </div>
+                <div class="chat-messages" id="chatMessages">
+                    <div class="msg bot">
+                        Сәлеметсіз бе! QazFin KBTU қолдау қызметіне қош келдіңіз. Сізге қандай қаржылық кеңес қажет? (Мысалы: <em>бағасы, лицензия, несие, алаяқтар, мұнай</em> деп жазып көріңіз)
+                    </div>
+                </div>
+                <div class="chat-input-area">
+                    <input type="text" id="chatInput" placeholder="Хабарлама жазыңыз..." onkeypress="if(event.key==='Enter') sendChat()">
+                    <button class="btn-primary" style="padding: 8px 16px;" onclick="sendChat()">Жіберу</button>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- MODAL: SERVICE DETAIL -->
+<div class="modal" id="serviceModal">
+    <div class="modal-content">
+        <span class="close-modal" onclick="closeModal('serviceModal')">&times;</span>
+        <h2 id="modalTitle" style="color: var(--primary); margin-bottom: 6px;">Қызмет атауы</h2>
+        <div id="modalPrice" style="font-size: 1.2rem; font-weight: 800; color: #059669; margin-bottom: 12px;"></div>
+        <div id="modalBody" style="color: var(--text); margin-bottom: 20px;"></div>
+        
+        <div style="background: #f8fafc; padding: 15px; border-radius: 8px; border: 1px solid var(--border);">
+            <h4 style="margin-bottom: 10px;">Осы қызметке өтінім қалдыру:</h4>
+            <input type="text" id="reqName" placeholder="Аты-жөніңіз" style="width:100%; padding:8px; margin-bottom:8px; border:1px solid #cbd5e1; border-radius:5px;">
+            <input type="text" id="reqPhone" placeholder="Телефон нөміріңіз (+7 7XX ...)" style="width:100%; padding:8px; margin-bottom:10px; border:1px solid #cbd5e1; border-radius:5px;">
+            <button class="btn-primary" style="width:100%;" onclick="submitServiceRequest()">Өтінім жіберу</button>
+            <p id="reqStatus" style="color: #059669; font-weight: 600; margin-top: 8px; display: none;"></p>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL: LOGIN & CABINET -->
+<div class="modal" id="loginModal">
+    <div class="modal-content">
+        <span class="close-modal" onclick="closeModal('loginModal')">&times;</span>
+        
+        <div id="loginFormView">
+            <h2 style="color: var(--primary); margin-bottom: 10px;">Жеке кабинетке кіру</h2>
+            <p style="color: var(--text-muted); margin-bottom: 15px;">Қаржылық талдауларыңыз бен тапсырыстарыңызды бақылау үшін жүйеге кіріңіз.</p>
+            <div class="form-group">
+                <label>ИИН немесе Email:</label>
+                <input type="text" id="loginUser" value="student@kbtu.kz">
+            </div>
+            <div class="form-group">
+                <label>Құпиясөз:</label>
+                <input type="password" id="loginPass" value="12345678">
+            </div>
+            <button class="btn-primary" style="width: 100%;" onclick="performLogin()">Кіру (Демо-режим)</button>
+        </div>
+
+        <div id="dashboardView" style="display: none;">
+            <h2 style="color: var(--primary); margin-bottom: 5px;">Қош келдіңіз, ҚБТУ Студенті!</h2>
+            <p style="color: var(--text-muted); margin-bottom: 15px;">Лицензияланған клиент профилі: <strong style="color: #059669;">Белсенді</strong></p>
+
+            <div class="dash-stat">
+                <span>Қаржылық денсаулық индексі (Scoring):</span>
+                <strong>86 / 100 (Жоғары)</strong>
+            </div>
+            <div class="dash-stat">
+                <span>Ұсынылатын жинақ қоры:</span>
+                <strong>245 000 ₸</strong>
+            </div>
+            <div class="dash-stat">
+                <span>Несиелік жүктеме коэффициенті:</span>
+                <strong style="color: #059669;">12% (Қауіпсіз деңгей)</strong>
+            </div>
+            <div class="dash-stat">
+                <span>Қосылған тариф:</span>
+                <strong>Студенттік (0 ₸) + KASE Портфель</strong>
+            </div>
+
+            <button class="card-btn" style="margin-top: 15px;" onclick="performLogout()">Жүйеден шығу</button>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <p>© 2026 QazFin Analytics — ҚБТУ (KBTU) студенттерінің лицензияланған стартап жобасы. ҚР ҚНРДА Лицензиясы № 1.2.248/91.</p>
+    <p style="margin-top: 5px;">Қолдау қызметі: +7 (747) 772-30-94 | Алматы қ., Төле би 59</p>
+</footer>
+
+<script>
+    // Tab Switching
+    function switchTab(tabId, btnElement) {
+        document.querySelectorAll('.tab-content').forEach(sec => sec.classList.remove('active'));
+        document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+        
+        document.getElementById(tabId).classList.add('active');
+        if (btnElement) btnElement.classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Detailed Service Data
+    const serviceData = {
+        budget: {
+            title: "Жеке бюджет және шығындарды бақылау",
+            price: "Құны: 0 ₸ (Студенттер мен жастарға толық тегін)",
+            text: "<p><strong>Неге бұл ең оңай қызмет?</strong> Сізден ешқандай күрделі құжат сұралмайды. Жүйе 50/30/20 ережесі бойынша табысыңызды автоматты бөледі:</p><ul style='margin-left:20px; margin-top:8px;'><li><strong>50% — Міндетті шығындар:</strong> тамақ, жол жүру, жатақхана/пәтер;</li><li><strong>30% — Жеке қалаулар:</strong> демалыс, киім, ойын-сауық;</li><li><strong>20% — Қол тигізбейтін жинақ қоры:</strong> депозитке немесе мақсатты жинаққа.</li></ul><p style='margin-top:10px;'><strong>Нәтижесі:</strong> 6 айдың ішінде қарыз алмай-ақ 150 000 – 400 000 ₸ жинақ қалыптастырасыз.</p>"
+        },
+        antifraud: {
+            title: "Қаржылық пирамида мен алаяқтарды тексеру (Anti-Fraud)",
+            price: "Құны: 1 500 ₸ (15 минут ішінде ресми қорытынды)",
+            text: "<p>Күмәнді инвестициялық компанияларға, Telegram-боттарға немесе жалған брокерлерге ақша аудармас бұрын біздің сарапшы Бекенова Қымбат толық тексеріс жүргізеді:</p><ul style='margin-left:20px; margin-top:8px;'><li>ҚР ҚНРДА (АРРФР) лицензиялар реестрінен тексеру;</li><li>Компанияның БСН (БИН), құрылтайшылары және салықтық берешегін анықтау;</li><li>Қаржы пирамидасының белгілеріне талдау жасау.</li></ul><p style='margin-top:10px;'><strong>Нәтижесі:</strong> Сізге «Қауіпсіз» немесе «Қауіпті — ақша салмаңыз» деген нақты жазбаша қорытынды беріледі.</p>"
+        },
+        credit: {
+            title: "Несиелік жүктемені азайту (Debt Relief)",
+            price: "Құны: 4 900 ₸ (Ең тиімді таңдау — орташа 120 000 ₸ үнемдейді)",
+            text: "<p>Егер сізде бірнеше банкте несие немесе Kaspi/Freedom рассрочкалары жиналып қалса, бас қаржы талдаушымыз Аштай Жанел сізге жеке кесте құрады:</p><ul style='margin-left:20px; margin-top:8px;'><li><strong>«Қар көшкіні» (Avalanche) әдісі:</strong> ең жоғары пайыздық мөлшерлемесі бар несиені бірінші жабу арқылы банкке төленетін артық сыйақыны 30%-ға дейін қысқарту;</li><li>Қайта қаржыландыру (рефинансирование) бойынша ең тиімді банкті таңдап беру;</li><li>Ай сайынғы төлем жүктемесін табыстың 25%-ынан асырмау жоспары.</li></ul>"
+        },
+        invest: {
+            title: "KASE / AIX инвестициялық портфель құру",
+            price: "Құны: 9 900 ₸ (Жылдық 16%–19% пассивті табыс көзі)",
+            text: "<p>Банк депозитінен жоғары, бірақ криптовалюта секілді қауіпті емес ресми қор нарығы құралдары:</p><ul style='margin-left:20px; margin-top:8px;'><li>ҚР Қаржы министрлігінің мемлекеттік облигациялары (салықтан босатылған);</li><li>«ҚазМұнайГаз», «Қазатомөнеркәсіп», «Халық Банк» дивидендтік акциялары;</li><li>АҚШ долларымен табыс әкелетін AIX еурооблигациялары.</li></ul><p style='margin-top:10px;'><strong>Нәтижесі:</strong> 50 000 теңгеден бастап жеке инвестициялық портфеліңізді жинап, алғашқы купондық табысты алуға көмектесеміз.</p>"
+        },
+        tax: {
+            title: "ЖК (ИП) салықтық есеп және 910-нысан",
+            price: "Құны: 7 500 ₸ (Жартыжылдық / тоқсандық есеп)",
+            text: "<p>Жас кәсіпкерлер мен фрилансерлерге арналған қарапайым шешім:</p><ul style='margin-left:20px; margin-top:8px;'><li>910.00 жеңілдетілген декларациясын (3% салық) қатесіз толтыру;</li><li>ОПВ (зейнетақы), СО (әлеуметтік аударым) және ВОСМС (медициналық сақтандыру) төлемдерін дәл есептеу;</li><li>Салық комитетінен келетін хабарламалар мен шот бұғатталуының алдын алу.</li></ul>"
+        },
+        oilfin: {
+            title: "Мұнай-газ және өндірістік жобаларды қаржылық модельдеу",
+            price: "Құны: 25 000 ₸ (Кәсіби инженерлік-экономикалық есеп)",
+            text: "<p>ҚБТУ «Мұнай-газ ісі» мамандығының студенттері әзірлеген арнайы аналитикалық қызмет:</p><ul style='margin-left:20px; margin-top:8px;'><li>Ұңғымаларды игеру, мұнай-газ құбырларын тасымалдау жобаларының <strong>CAPEX (күрделі шығындар)</strong> және <strong>OPEX (операциялық шығындар)</strong> сметасы;</li><li><strong>NPV (Таза келтірілген құн)</strong>, <strong>IRR (Ішкі табыстылық нормасы)</strong> және өтелу мерзімін (Payback Period) есептеу;</li><li>Brent мұнай бағасы $60, $75 және $90 болғандағы 3 түрлі сценарийлік талдау.</li></ul>"
+        }
+    };
+
+    function openServiceDetail(key) {
+        const data = serviceData[key];
+        document.getElementById('modalTitle').innerText = data.title;
+        document.getElementById('modalPrice').innerText = data.price;
+        document.getElementById('modalBody').innerHTML = data.text;
+        document.getElementById('reqStatus').style.display = 'none';
+        document.getElementById('serviceModal').classList.add('active');
+    }
+
+    function submitServiceRequest() {
+        const name = document.getElementById('reqName').value.trim();
+        const phone = document.getElementById('reqPhone').value.trim();
+        const status = document.getElementById('reqStatus');
+
+        if (!name || !phone) {
+            alert("Өтінеміз, аты-жөніңіз бен телефон нөміріңізді енгізіңіз!");
+            return;
+        }
+        status.style.display = 'block';
+        status.innerText = `Рақмет, ${name}! Өтініміңіз тіркелді. Біздің маман (+7 747 772 30 94) 15 минут ішінде хабарласады.`;
+    }
+
+    // Service Recommender Logic
+    function recommendService() {
+        const goal = document.getElementById('goalSelect').value;
+        const out = document.getElementById('recommendOutput');
+
+        if (goal === 'save') {
+            out.innerHTML = `<strong>Ұсыныс:</strong> Сізге <strong>«Жеке бюджет және шығындарды бақылау» (Тегін — 0 ₸)</strong> қызметі өте қолайлы. Бұл <strong>ең оңай</strong> бастама: небәрі 10 минутта айлық шығындарыңызды реттеп, алғашқы жинақ қорын құрасыз.`;
+        } else if (goal === 'debt') {
+            out.innerHTML = `<strong>Ұсыныс:</strong> Сізге <strong>«Несиелік жүктемені азайту — Debt Relief» (4 900 ₸)</strong> қызметі қажет. Бұл <strong>ең тиімді</strong> шешім: банктерге төлейтін артық пайыздарды 30%-ға дейін қысқартып, қарыздан тез шығу кестесін аласыз.`;
+        } else if (goal === 'grow') {
+            out.innerHTML = `<strong>Ұсыныс:</strong> Сізге <strong>«KASE / AIX инвестициялық портфель құру» (9 900 ₸)</strong> қызметі сәйкес келеді. Депозиттен жоғары (жылына 16–19%) сенімді табыс көзін қалыптастырасыз.`;
+        } else if (goal === 'safe') {
+            out.innerHTML = `<strong>Ұсыныс:</strong> Сізге <strong>«Қаржылық пирамида мен алаяқтарды тексеру» (1 500 ₸)</strong> қызметін таңдау керек. 15 минут ішінде компанияның лицензиясы мен заңдылығын тексеріп береміз.`;
+        } else if (goal === 'oil') {
+            out.innerHTML = `<strong>Ұсыныс:</strong> Сізге <strong>«Мұнай-газ және өндірістік қаржы модельдеу» (25 000 ₸)</strong> қызметі арналған. Жобаның NPV, IRR және CAPEX/OPEX көрсеткіштерін толық есептейміз.`;
+        }
+    }
+
+    // License Verification Simulation
+    function verifyLicense() {
+        const msg = document.getElementById('licVerifyMsg');
+        msg.style.display = 'block';
+        msg.innerText = "✓ Тексерілді: ҚР ҚНРДА мемлекеттік базасында № 1.2.248/91 лицензиясы «QazFin Analytics KBTU» ЖШС атына тіркелген. Мәртебесі: Қолданыста (Белсенді).";
+    }
+
+    // Finance Calculator Logic
+    function calculateFinance() {
+        const income = parseFloat(document.getElementById('incomeInput').value) || 0;
+        const expense = parseFloat(document.getElementById('expenseInput').value) || 0;
+        const months = parseInt(document.getElementById('monthsInput').value) || 1;
+        const annualRate = parseFloat(document.getElementById('rateInput').value) || 0;
+
+        const monthlySave = income - expense;
+        const resBox = document.getElementById('calcResult');
+
+        if (monthlySave <= 0) {
+            resBox.innerHTML = `<strong style="color:#dc2626;">Назар аударыңыз!</strong> Сіздің шығындарыңыз табысыңыздан асып кетті немесе тең. «Жеке бюджет» (0 ₸) қызметі арқылы шығындарды 15-20%-ға қысқартуға кеңес береміз.`;
+            return;
+        }
+
+        const monthlyRate = (annualRate / 100) / 12;
+        let total = 0;
+        for (let i = 0; i < months; i++) {
+            total = (total + monthlySave) * (1 + monthlyRate);
+        }
+
+        const pureSaved = monthlySave * months;
+        const profit = total - pureSaved;
+
+        resBox.innerHTML = `
+            <h4 style="color: var(--primary); margin-bottom: 8px;">Жеке қаржылық талдау нәтижесі:</h4>
+            <p>• Ай сайынғы бос қаражат (жинақ): <strong>${monthlySave.toLocaleString()} ₸</strong></p>
+            <p>• ${months} айда жиналатын негізгі сома: <strong>${Math.round(pureSaved).toLocaleString()} ₸</strong></p>
+            <p>• Инвестициялық таза пайда (${annualRate}%): <strong style="color:#059669;">+${Math.round(profit).toLocaleString()} ₸</strong></p>
+            <p style="margin-top:8px; font-size:1.1rem;">• Жалпы капитал: <strong style="color:var(--primary);">${Math.round(total).toLocaleString()} ₸</strong></p>
+        `;
+    }
+
+    // Support Chat Logic
+    function sendChat() {
+        const input = document.getElementById('chatInput');
+        const text = input.value.trim();
+        if (!text) return;
+
+        const messages = document.getElementById('chatMessages');
+        
+        const userDiv = document.createElement('div');
+        userDiv.className = 'msg user';
+        userDiv.innerText = text;
+        messages.appendChild(userDiv);
+        input.value = '';
+        messages.scrollTop = messages.scrollHeight;
+
+        setTimeout(() => {
+            const botDiv = document.createElement('div');
+            botDiv.className = 'msg bot';
+            const lower = text.toLowerCase();
+
+            if (lower.includes('баға') || lower.includes('құны') || lower.includes('теңге') || lower.includes('тариф')) {
+                botDiv.innerText = "Біздің қызметтер бағасы: Жеке бюджет — 0 ₸ (тегін), Алаяқтарды тексеру — 1 500 ₸, Несиелік жоспар — 4 900 ₸, ЖК салық есебі — 7 500 ₸, KASE портфелі — 9 900 ₸, Мұнай-газ модельдеуі — 25 000 ₸.";
+            } else if (lower.includes('лицензия') || lower.includes('заңды') || lower.includes('құжат')) {
+                botDiv.innerText = "Біз ҚР ҚНРДА берген № 1.2.248/91 мемлекеттік лицензиясы негізінде жұмыс істейміз. «Неге біз? & Лицензия» бөліміне кіріп, түпнұсқалығын тексере аласыз.";
+            } else if (lower.includes('несие') || lower.includes('кредит') || lower.includes('қарыз')) {
+                botDiv.innerText = "Несиелік жүктемені азайту қызметі небәрі 4 900 ₸ тұрады. Қаржы талдаушымыз Аштай Жанел сізге артық пайыздарды 30%-ға дейін қысқарту кестесін жасап береді. Байланыс: +7 (747) 772-30-94.";
+            } else if (lower.includes('алаяқ') || lower.includes('пирамида')) {
+                botDiv.innerText = "Күмәнді компанияны тексеру құны — 1 500 ₸. БСН (БИН) нөмірін жіберсеңіз, сарапшымыз Бекенова Қымбат 15 минутта тексеріп береді.";
+            } else if (lower.includes('мұнай') || lower.includes('кбту') || lower.includes('қбту')) {
+                botDiv.innerText = "Біз ҚБТУ студенттерінің лицензияланған стартапымыз! Мұнай-газ жобаларының экономикалық тиімділігін (NPV, IRR, 25 000 ₸) Айджанов Дінмұхамед пен Бөрібай Нұржан есептейді.";
+            } else {
+                botDiv.innerText = "Сұрағыңыз қабылданды! Толық кеңес алу үшін біздің байланыс нөмірімізге қоңырау шалыңыз немесе WhatsApp-қа жазыңыз: +7 (747) 772-30-94 (Қолдау қызметі).";
+            }
+
+            messages.appendChild(botDiv);
+            messages.scrollTop = messages.scrollHeight;
+        }, 500);
+    }
+
+    // Login / Dashboard Modal
+    function openLoginModal() {
+        document.getElementById('loginModal').classList.add('active');
+    }
+
+    function closeModal(id) {
+        document.getElementById(id).classList.remove('active');
+    }
+
+    function performLogin() {
+        document.getElementById('loginFormView').style.display = 'none';
+        document.getElementById('dashboardView').style.display = 'block';
+        document.getElementById('authBtn').innerText = "Кабинет (Белсенді)";
+        document.getElementById('authBtn').style.background = "#22c55e";
+    }
+
+    function performLogout() {
+        document.getElementById('loginFormView').style.display = 'block';
+        document.getElementById('dashboardView').style.display = 'none';
+        document.getElementById('authBtn').innerText = "Жеке кабинет";
+        document.getElementById('authBtn').style.background = "var(--secondary)";
+        closeModal('loginModal');
+    }
+</script>
+
+</body>
+</html>
